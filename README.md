@@ -1,8 +1,12 @@
 # pano-reframe
 
 Turn a stitched spherical panorama into a regular camera view with deterministic
-pixel reprojection. A Python CLI and reusable Codex skill for inspecting drone or
-gimbal panoramas, especially architectural references.
+pixel reprojection. A harness-agnostic Python CLI and reusable agent skill for
+inspecting drone or gimbal panoramas, especially architectural references.
+
+Use it with **Codex, Claude Code, Cursor, Gemini CLI, OpenCode**, or another agent
+harness that can read files and execute Python. The projection engine has no
+dependency on a model provider, agent SDK or harness API.
 
 Choose yaw, elevation, horizontal field of view, a calibrated compass heading, or
 a wall-facing direction. Each output includes a JSON manifest recording its source
@@ -36,23 +40,70 @@ python3 -m venv .venv
 .venv/bin/pano-reframe --help
 ```
 
-To make it discoverable as a personal Codex skill, link the repository into the
-skills directory. The command will fail if a skill already occupies that name;
-inspect that existing installation before replacing anything.
+## Use with an agent harness
+
+[SKILL.md](SKILL.md) uses the portable
+[Agent Skills format](https://agentskills.io/specification): Markdown instructions
+with `name` and `description` metadata, backed by local scripts and references.
+Keep the whole repository together: the wrapper imports `pano_reframe/`, so copying
+only `SKILL.md` or `scripts/` is insufficient. Install the Python dependencies in
+the environment where the harness will actually run the helper.
+
+The following are local skill discovery locations from each harness's official
+documentation. Append `pano-reframe/` to the selected directory and place or link
+this repository there.
+
+| Harness | Personal skill directory | Project skill directory | Reference |
+| --- | --- | --- | --- |
+| Codex | `~/.agents/skills/` | `.agents/skills/` | [Codex skills](https://developers.openai.com/codex/skills) |
+| Claude Code | `~/.claude/skills/` | `.claude/skills/` | [Claude Code skills](https://code.claude.com/docs/en/skills) |
+| Cursor | `~/.cursor/skills/` or `~/.agents/skills/` | `.cursor/skills/` or `.agents/skills/` | [Cursor skills](https://cursor.com/help/customization/skills) |
+| Gemini CLI | `~/.gemini/skills/` or `~/.agents/skills/` | `.gemini/skills/` or `.agents/skills/` | [Gemini CLI skills](https://geminicli.com/docs/cli/using-agent-skills/) |
+| OpenCode | `~/.config/opencode/skills/` or `~/.agents/skills/` | `.opencode/skills/` or `.agents/skills/` | [OpenCode skills](https://opencode.ai/docs/skills/) |
+
+For harnesses that discover `~/.agents/skills/`, link your existing checkout on
+macOS/Linux:
 
 ```sh
-mkdir -p ~/.codex/skills
-ln -s ~/development/pano-reframe ~/.codex/skills/pano-reframe
+mkdir -p ~/.agents/skills
+test ! -e ~/.agents/skills/pano-reframe && \
+  test ! -L ~/.agents/skills/pano-reframe && \
+  ln -s ~/development/pano-reframe ~/.agents/skills/pano-reframe
 ```
 
-Invoke `$pano-reframe` in Codex, or let Codex select it for a panorama task.
-[SKILL.md](SKILL.md) contains the agent workflow; [AGENTS.md](AGENTS.md) describes
-development conventions. The portable entrypoint also works from another directory:
+The guards stop the command if the destination already exists, including a broken
+symlink; inspect an existing installation before replacing it. For Claude Code,
+select `~/.claude/skills/` instead. Gemini CLI also offers
+`gemini skills link ~/development/pano-reframe`. Use one discovery
+location per harness to avoid duplicate entries. Existing Codex installations of
+this skill under `~/.codex/skills/` can retain their working link.
+
+Invoke `$pano-reframe` in Codex or `/pano-reframe` in Claude Code; other harnesses
+can select the skill from its description or their skill picker. Discovery paths
+and invocation vary by version. These setup routes are documentation-verified;
+the CLI test suite is not an end-to-end evaluation of every harness or model.
+Local links and virtual environments do not automatically transfer to remote or
+cloud workers: provision the repository and dependencies in their environment.
+
+For a harness without native skills, ask it to read `/path/to/pano-reframe/SKILL.md`
+and use the absolute helper path below, or register the CLI as a subprocess tool.
+File access and Python execution are required; image viewing is useful for visual
+verification. No MCP server, API key or Codex installation is required.
+
+The portable entrypoint works from another directory:
 
 ```sh
 ~/development/pano-reframe/.venv/bin/python \
   ~/development/pano-reframe/scripts/pano_reframe.py --help
 ```
+
+It also supports `.venv/bin/python -m pano_reframe` and the installed
+`pano-reframe` command. Outputs are PNG/JPEG plus JSON manifests, usable by any
+harness. [AGENTS.md](AGENTS.md) describes contributor conventions; load it explicitly
+if your harness doesn't discover that filename.
+
+`agents/openai.yaml` contains optional Codex UI metadata only. Other harnesses can
+ignore it: it does not affect the instructions or runtime.
 
 ## Inspect and extract
 

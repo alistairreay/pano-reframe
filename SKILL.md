@@ -1,6 +1,7 @@
 ---
 name: pano-reframe
 description: Inspect stitched spherical drone or gimbal panoramas and extract normal perspective views by yaw, pitch, FoV, compass reference or wall alignment. Use for panorama interpretation and building/photo reference work; ordinary lens correction and stitching individual photos are outside this skill.
+license: MIT
 ---
 
 # Panorama Reframe
@@ -10,10 +11,17 @@ rectilinear camera views. It samples the original pixels mathematically, preserv
 the source and produces a JSON manifest with orientation, scale conventions,
 source hash and missing coverage. It does not generate image content.
 
+These instructions are harness-neutral. Use the host's file-reading, shell/Python
+execution and image-viewing tools. Resolve paths from this skill's actual location;
+no particular tool name, agent SDK or provider-specific environment variable is
+required. `agents/openai.yaml` is optional UI metadata for Codex and can be ignored
+by other harnesses. Read the README's harness setup section only when installing.
+
 ## Run the helper
 
-The skill root is the folder containing this file. Prefer its `.venv/bin/python`
-when available; otherwise use a Python with NumPy and Pillow. The portable entrypoint
+Requires Python 3.10 or newer with NumPy and Pillow, plus local file access. The
+skill root is the folder containing this file. Prefer its `.venv/bin/python`
+when available; otherwise use a compatible Python. The portable entrypoint
 is `<skill-root>/scripts/pano_reframe.py`. It works from any directory. If dependencies
 are missing, create a project-local venv and install the two packages; do not alter
 an unrelated/global Python environment. The project also installs a `pano-reframe`

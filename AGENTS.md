@@ -1,6 +1,6 @@
 # Working on pano-reframe
 
-This repository is the source of the discoverable `pano-reframe` Codex skill.
+This repository is the source of the portable `pano-reframe` agent skill and CLI.
 SKILL.md is its entrypoint. Core numerical operations are in pano_reframe/core.py;
 CLI/profile/output handling is in pano_reframe/cli.py. The skill wrapper is
 scripts/pano_reframe.py. Keep the wrapper runnable from unrelated working directories.
@@ -26,7 +26,9 @@ and branch coverage for the package and skill wrapper. Keep that threshold and
 add meaningful tests for numerical invariants, failure cases and CLI flows rather
 than excluding code to achieve it. Test data should be generated locally.
 
-Run the skill-creator quick validator when changing SKILL.md/frontmatter. Preserve
-normal automatic skill discovery. Public documentation must explain calibration
-assumptions and reproducible CLI examples. Generated local previews and coverage
+Validate SKILL.md/frontmatter against the Agent Skills format when changing it;
+use the skill-creator quick validator if available. Keep shared instructions and
+runtime harness-neutral; isolate optional host UI metadata in agents/openai.yaml.
+Preserve normal automatic skill discovery. Public documentation must explain
+calibration assumptions and reproducible CLI examples. Generated local previews and coverage
 reports belong under ignored paths. Never modify unrelated floorplan projects.
