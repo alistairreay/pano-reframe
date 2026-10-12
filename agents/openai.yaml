@@ -1,0 +1,4 @@
+interface:
+  display_name: "Panorama Reframe"
+  short_description: "Inspect spherical panoramas with regular camera views"
+  default_prompt: "Use $pano-reframe to inspect this panorama and make a wall-facing perspective view."

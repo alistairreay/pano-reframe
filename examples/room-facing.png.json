@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "source_name": "room-sphere.png",
+  "source_sha256": "33f7d3445c3c6104512784561632d5e2c82f7c7003688d804346fd018904a138",
+  "geometry": {
+    "width": 1440,
+    "height": 720,
+    "full_width": 1440,
+    "full_height": 720,
+    "left": 0,
+    "top": 0,
+    "basis": "user-declared full sphere"
+  },
+  "view": {
+    "yaw": 35.000000000000014,
+    "pitch": 0.0,
+    "roll": 0,
+    "horizontal_fov": 70.0,
+    "width": 900,
+    "height": 675
+  },
+  "source_pose": {
+    "pitch": 0.0,
+    "roll": 0.0
+  },
+  "coverage": {
+    "valid_fraction": 1.0,
+    "vertical_fov": 55.412927352596554
+  },
+  "wall": {
+    "yaw": 35.000000000000014,
+    "pitch": 0.0,
+    "method": "marked vertical rectangle",
+    "corners_source_pixels": [
+      [
+        753.739795292,
+        285.832088144
+      ],
+      [
+        966.260204708,
+        285.832088144
+      ],
+      [
+        966.260204708,
+        434.167911856
+      ],
+      [
+        753.739795292,
+        434.167911856
+      ]
+    ],
+    "vanishing_elevation_error_degrees": 1.2092733945152487e-15,
+    "confidence": "estimated; depends on correct edges, level pose and stitching"
+  },
+  "warnings": [
+    "No GPano metadata: projection/coverage and compass heading are unverified"
+  ],
+  "limits": "Rotation only: no depth, new viewpoint, metric scale or stitching repair"
+}

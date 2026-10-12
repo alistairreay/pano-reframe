@@ -1,0 +1,23 @@
+{
+  "description": "Synthetic red frame centreline; TL, TR, BR, BL in source pixels",
+  "source": "room-sphere.png",
+  "corners": [
+    [
+      753.739795291688,
+      285.83208814401104
+    ],
+    [
+      966.2602047083119,
+      285.83208814401104
+    ],
+    [
+      966.2602047083119,
+      434.1679118559889
+    ],
+    [
+      753.739795291688,
+      434.1679118559889
+    ]
+  ],
+  "expected_yaw": 35
+}
